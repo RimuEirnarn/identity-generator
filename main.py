@@ -9,16 +9,30 @@ from random import randint as _randbase
 
 base_10 = list("1234567890")
 base_26 = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+base_36 = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
 
-def generator(sep="-", order=[base_26, base_10]):
+def generator(sep="-", order=[base_26, base_10], order_max=[2, 4]):
     """The Generator
 
     Argument:
       sep: is used to be a seperator between base-26 and base-10
            for example AA-0000.
       order: used to be how it generates. (ex. AA-AA-5000, then
-             the order will be: [base_26, base_26, base_10]"""
-    pass
+           the order will be: [base_26, base_26, base_10])
+      order_max: used to be the maximum character for every order.
+           (ex. [2, 4] then the order arg. would look like this
+           [base_26, base_10], and rougly returns like this
+           AA-0000)"""
+    ret = [[] for a in order_max]
+    for ord_mx in order_max:
+        index = order_max.index(ord_mx)
+        base = order[index]
+        ln = randint(1, ord_mx)
+        while ln != 0:
+            ret[index].append(base[randint[0, len(base)])
+            ln -= 1
+     
+     return "".join("".join(b for b in ret[a])+"-" for a in ret)[:-1]
 
 
 # Offerides from GTRN.util.randint
@@ -29,6 +43,8 @@ def randint(x, y, onion=3):
     base = _randbase(x, y)
     base_ = None
     default_onion = onion
+    if x == y:
+        return x
     while onion > 0:
         n = _randbase(0, 10)
         if not base_:
