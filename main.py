@@ -24,22 +24,20 @@ def generator(sep="-", order=[base_26, base_10], order_max=[2, 4], order_min=[1,
            [base_26, base_10], and rougly returns like this
            AA-0000)
       order_min: used to be the minimum characters for every order."""
-    ret = [[] for a in order_max]
-    for ord_mx in order_max:
-        index = order_max.index(ord_mx)
-        ord_mn = order_min[index]
-        base = order[index]
-        ln = randint(ord_mn, ord_mx)
-        while ln != 0:
-            ret[index].append(base[randint(0, len(base))])
-            ln -= 1
-
     string = ""
-    for a in ret:
-        string += "".join(b for b in a)
+    if len(order_max) == len(order) and len(order_min) == len(order):
+        pass
+    else:
+        raise Exception("One of these order values must be same length.")
+    for base in order:
+        index = order.index(base)
+        cnt = randint(order_min[index], order_max[index])
         string += "-"
-    string = string[:-1]
-    return string
+        while cnt != 0:
+            rn = randint(0, len(base))
+            string += base[rn-1]
+            cnt -= 1
+    return string[1:]
 
 
 # Offerides from GTRN.util.randint
@@ -68,3 +66,6 @@ def randint(x, y, onion=3):
     if default_onion <= 0:
         base_ = randint(x, y, 3)  # Default
     return base_
+
+if __name__ == "__main__":
+    print(generator(order_min=[2, 4]))
